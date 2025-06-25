@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+char himpunan[10], hasil[10];
+bool digunakan[10];
+int total = 0;
+
+void permutasi(int n, int r, int kedalaman) {
+    if (kedalaman == r) {
+        total++;
+        cout << total << ". ";
+        for (int i = 0; i < r; i++) {
+            cout << hasil[i] << " ";
+        }
+        cout << endl;
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (!digunakan[i]) {
+            digunakan[i] = true;
+            hasil[kedalaman] = himpunan[i];
+            permutasi(n, r, kedalaman + 1);
+            digunakan[i] = false;
+        }
+    }
+}
+
+int faktorial(int x) {
+    int f = 1;
+    for (int i = 2; i <= x; i++) f *= i;
+    return f;
+}
+
+int main() {
+    int n, r;
+    cout << "Masukkan jumlah elemen (n): ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cout << "Masukkan elemen ke-" << i + 1 << " : ";
+        cin >> himpunan[i];
+    }
+
+    cout << "Masukkan panjang permutasi (r): ";
+    cin >> r;
+
+    int jumlah = faktorial(n) / faktorial(n - r);
+    cout << "Jumlah permutasi: " << jumlah << endl;
+    cout << "Tekan Enter untuk menampilkan hasil...\n";
+    cin.ignore();
+    cin.get();
+
+    permutasi(n, r, 0);
+
+    return 0;
+}
